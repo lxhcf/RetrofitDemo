@@ -1,5 +1,6 @@
 package com.example.sl.retrofitsample.Gson;
 
+
 import java.util.List;
 
 /**

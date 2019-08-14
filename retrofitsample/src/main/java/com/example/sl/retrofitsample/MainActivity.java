@@ -1,22 +1,30 @@
 package com.example.sl.retrofitsample;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.sl.retrofitsample.Gson.GankBean;
+import com.example.sl.retrofitsample.Gson.JavaBean;
 import com.example.sl.retrofitsample.Gson.Result;
 import com.example.sl.retrofitsample.Gson.User;
 import com.example.sl.retrofitsample.Gson.WeatherDataBean;
-import com.example.sl.retrofitsample.Impl.GnakApi;
 import com.example.sl.retrofitsample.Impl.GnakApi1;
+import com.example.sl.retrofitsample.Impl.JavaApi;
 import com.example.sl.retrofitsample.Impl.PostApi;
 import com.example.sl.retrofitsample.Impl.PostApi1;
 import com.example.sl.retrofitsample.Impl.WeatherApi;
 import com.example.sl.retrofitsample.Impl.WeatherApi1;
+import com.smarttop.library.bean.City;
+import com.smarttop.library.bean.County;
+import com.smarttop.library.bean.Province;
+import com.smarttop.library.bean.Street;
+import com.smarttop.library.widget.AddressSelector;
+import com.smarttop.library.widget.BottomDialog;
+import com.smarttop.library.widget.OnAddressSelectedListener;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -29,8 +37,9 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, OnAddressSelectedListener, AddressSelector.OnDialogCloseListener, AddressSelector.onSelectorAreaPositionListener {
     private static final String TAG = "MainActivity";
+    private BottomDialog dialog;
     @BindView(R.id.btn_requet)
     Button mBtnRequet;
     @BindView(R.id.tv_result)
@@ -64,33 +73,37 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()) {
             case R.id.btn_requet:
                 Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl("http://gank.io/")//这里不要用localhost 我们用ip地址来
+//                        .baseUrl("http://gank.io/")//这里不要用localhost 我们用ip地址来
+                        .baseUrl("http://datavmap-public.oss-cn-hangzhou.aliyuncs.com/")//这里不要用localhost 我们用ip地址来
                         .addConverterFactory(GsonConverterFactory.create())
                         .build();
                 //创建网络请求接口的实例
-                GnakApi api = retrofit.create(GnakApi.class);
+                JavaApi api = retrofit.create(JavaApi.class);
                 //对发送的请求进行封装 以及对实体类进行指定
-                Call<GankBean> call = api.getAndroidInfo();
-                call.enqueue(new Callback<GankBean>() {//这里回调有子线程 所以可以进行UI操作
+                Call<JavaBean> call = api.getAndroidInfo();
+                call.enqueue(new Callback<JavaBean>() {//这里回调有子线程 所以可以进行UI操作
                     @Override
-                    public void onResponse(Call<GankBean> call, Response<GankBean> response) {
+                    public void onResponse(Call<JavaBean> call, Response<JavaBean> response) {
                         //我们对返回的GankBean实体类以及response响应数据进行回调函数编写操作
-                        GankBean.ResultsBean bean = response.body().getResults().get(0);
-                        //以上代码将实体类bean与返回数据索引为0的数据对应
-                        mTvResult.setText(
-                                "_id:" + bean.get_id() + "\n" +
-                                        "createdAt:" + bean.getCreatedAt() + "\n" +
-                                        "desc:" + bean.getDesc() + "\n" +
-                                        "images:" + bean.getImages() + "\n" +
-                                        "publishedAt:" + bean.getPublishedAt() + "\n" +
-                                        "source:" + bean.getSource() + "\n" +
-                                        "type:" + bean.getType() + "\n" +
-                                        "url:" + bean.getUrl() + "\n" +
-                                        "who:" + bean.getWho() + "\n");
+//                        GankBean.ResultsBean bean = response.body().getResults().get(0);
+
+                        StringBuilder stringBuilder=new StringBuilder();
+                        int i=0;
+                        while (i<10){
+                            JavaBean.RowsBean bean = response.body().getRows().get(i);
+                            stringBuilder.append(bean.getName()+" ");
+                            i++;
+                        }
+
+                        JavaBean.RowsBean bean = response.body().getRows().get(1);
+
+
+
+                        mTvResult.setText(stringBuilder);
                     }
 
                     @Override
-                    public void onFailure(Call<GankBean> call, Throwable t) {
+                    public void onFailure(Call<JavaBean> call, Throwable t) {
 
                     }
                 });
@@ -208,6 +221,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             default:
                 break;
+        }
+    }
+
+    @Override
+    public void dialogclose() {
+        if(dialog!=null){
+            dialog.dismiss();
+        }
+    }
+
+    @Override
+    public void selectorAreaPosition(int provincePosition, int cityPosition, int countyPosition, int streetPosition) {
+//        this.provincePosition = provincePosition;
+//        this.cityPosition = cityPosition;
+//        this.countyPosition = countyPosition;
+//        this.streetPosition = streetPosition;
+    }
+
+    @Override
+    public void onAddressSelected(Province province, City city, County county, Street street) {
+        String s = (province == null ? "" : province.name) + (city == null ? "" : city.name) + (county == null ? "" : county.name) +
+                (street == null ? "" : street.name);
+//        tv_selector_area.setText(s);
+        if (dialog != null) {
+            dialog.dismiss();
         }
     }
 }
