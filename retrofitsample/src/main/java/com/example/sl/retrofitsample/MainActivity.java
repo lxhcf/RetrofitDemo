@@ -1,9 +1,18 @@
 package com.example.sl.retrofitsample;
 
+//import android.annotation.SuppressLint;
 import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+//import androidx.recyclerview.widget.LinearLayoutManager;
+//import androidx.recyclerview.widget.RecyclerView;
+
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,7 +35,9 @@ import com.smarttop.library.widget.AddressSelector;
 import com.smarttop.library.widget.BottomDialog;
 import com.smarttop.library.widget.OnAddressSelectedListener;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -37,9 +48,15 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, OnAddressSelectedListener, AddressSelector.OnDialogCloseListener, AddressSelector.onSelectorAreaPositionListener {
     private static final String TAG = "MainActivity";
     private BottomDialog dialog;
+    RecycleDemoAdapter adapter;
+    private List<String> list;
+
+//    RecyclerView recycleView ;
+
     @BindView(R.id.btn_requet)
     Button mBtnRequet;
     @BindView(R.id.tv_result)
@@ -55,10 +72,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @BindView(R.id.btn_request5)
     Button mBtnRequest5;
 
+    @BindView(R.id.recyclerView)
+    RecyclerView recycleView;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         ButterKnife.bind(this);
         mBtnRequet.setOnClickListener(this);
         mBtnRequet1.setOnClickListener(this);
@@ -66,6 +89,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mBtnRequest3.setOnClickListener(this);
         mBtnRequet4.setOnClickListener(this);
         mBtnRequest5.setOnClickListener(this);
+
     }
 
     @Override
@@ -87,19 +111,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         //我们对返回的GankBean实体类以及response响应数据进行回调函数编写操作
 //                        GankBean.ResultsBean bean = response.body().getResults().get(0);
 
-                        StringBuilder stringBuilder=new StringBuilder();
-                        int i=0;
-                        while (i<10){
-                            JavaBean.RowsBean bean = response.body().getRows().get(i);
-                            stringBuilder.append(bean.getName()+" ");
-                            i++;
+                        List<JavaBean.RowsBean> rows = response.body().getRows();
+
+
+                        list=new ArrayList<>();
+
+                        for (JavaBean.RowsBean row : rows) {
+//                            row.
+                            list.add(row.getName());
                         }
 
-                        JavaBean.RowsBean bean = response.body().getRows().get(1);
+                        adapter=new RecycleDemoAdapter(MainActivity.this,list);
 
+                        LinearLayoutManager layoutManager=new LinearLayoutManager(MainActivity.this);
 
+//                        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+                        recycleView.setLayoutManager(layoutManager);
+                        recycleView.setAdapter(adapter);
+//                        adapter.update(list);
 
-                        mTvResult.setText(stringBuilder);
+//                        mTvResult.setText(stringBuilder);
                     }
 
                     @Override

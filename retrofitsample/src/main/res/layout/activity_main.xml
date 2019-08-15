@@ -5,12 +5,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.example.sl.retrofitsample.MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/btn_request5"
@@ -40,6 +41,15 @@
             android:layout_height="wrap_content"
             android:text="get动态请求 拼接url 单个参数"/>
 
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
         <Button
             android:id="@+id/btn_requet"
             android:layout_width="match_parent"
@@ -52,5 +62,13 @@
             android:id="@+id/tv_result"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </androidx.recyclerview.widget.RecyclerView>
+
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
