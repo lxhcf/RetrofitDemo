@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:id="@+id/text"
-        android:background="@color/colorPrimary"
         android:text="测试"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
         />
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:background="@color/colorAccent"
+        android:layout_height="1dp"
+        android:background="@color/colorline"
         />
-</LinearLayout>
+</RelativeLayout>

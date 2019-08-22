@@ -1,6 +1,7 @@
 package com.example.sl.retrofitsample;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,10 +21,23 @@ import butterknife.BindView;
 public class RecycleDemoAdapter extends RecyclerView.Adapter<RecycleDemoAdapter.MyHolder> {
     Context context;
     List<String> list;
+    int rank;
+    List<String> adcodeList;
 
     public RecycleDemoAdapter(Context context, List<String> list) {
         this.context = context;
         this.list=list;
+    }
+    public RecycleDemoAdapter(Context context, List<String> list,int rank) {
+        this.context = context;
+        this.list=list;
+        this.rank=rank;
+    }
+    public RecycleDemoAdapter(Context context, List<String> list,int rank, List<String> adcodeList) {
+        this.context = context;
+        this.list=list;
+        this.rank=rank;
+        this.adcodeList=adcodeList;
     }
     public void update( List<String> list){
         this.list=list;
@@ -57,6 +71,13 @@ public class RecycleDemoAdapter extends RecyclerView.Adapter<RecycleDemoAdapter.
     @Override
     public MyHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.recycleview_demo_item,parent,false);
+        /**
+         * 加下划线
+         */
+        RecyclerView.LayoutParams layoutParams=(RecyclerView.LayoutParams)view.getLayoutParams();
+        layoutParams.topMargin=1;
+        view.setLayoutParams(layoutParams);
+
         MyHolder myHolder=new MyHolder(view);
         return myHolder;
 
@@ -73,12 +94,32 @@ public class RecycleDemoAdapter extends RecyclerView.Adapter<RecycleDemoAdapter.
         
 
         String s=list.get(position);
+
         holder.textView.setText(s);
         //对控件进行监听
         holder.textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent;
+                if(rank==0){
+                    intent=new Intent(context,CityActivity.class);
+                    intent.putExtra("province",s);
+                    intent.putExtra("adcode",adcodeList.get(position));
+                    context.startActivity(intent);
+                }
+                else if(rank==1) {
+                    intent=new Intent(context,DistractActivity.class);
+                    intent.putExtra("city",s);
+                    intent.putExtra("adcode",adcodeList.get(position));
+                    context.startActivity(intent);
 
+                }
+                else {
+                    intent=new Intent(context,WeatherActivity.class);
+                    intent.putExtra("distract",s);
+                    context.startActivity(intent);
+
+                }
             }
         });
         //对整个item进行监听

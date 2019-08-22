@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">RetrofitSample</string>
+    <string name="hello"><u>phone:0123456</u></string>
 </resources>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -8,60 +8,7 @@
     android:orientation="vertical"
     tools:context="com.example.sl.retrofitsample.MainActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/btn_request5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="POST提交表单"/>
-        <Button
-            android:id="@+id/btn_requet4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="POST上传"/>
-        <Button
-            android:id="@+id/btn_request2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="get占位符直接传参"/>
-
-        <Button
-            android:id="@+id/btn_request3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="GET动态请求 拼接URL 多个参数（K-V）"/>
-
-        <Button
-            android:id="@+id/btn_requet1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="get动态请求 拼接url 单个参数"/>
-
-
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-        <Button
-            android:id="@+id/btn_requet"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="正常请求"
-            android:textAllCaps="false"
-            android:textColor="@android:color/white"/>
-
-        <TextView
-            android:id="@+id/tv_result"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
@@ -70,5 +17,4 @@
         </androidx.recyclerview.widget.RecyclerView>
 
 
-    </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
