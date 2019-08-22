@@ -33,6 +33,7 @@ public class DistractActivity extends AppCompatActivity {
     TextView distract;
     @BindView(R.id.distractRecyclerView)
     RecyclerView recycleView;
+    private String city;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,10 +42,10 @@ public class DistractActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         Intent intent = getIntent();
-        String city = intent.getStringExtra("city");
+        city = intent.getStringExtra("city");
         adcode=intent.getStringExtra("adcode");
 
-        distract.setText(city+"包括以下县:");
+        distract.setText(city +"包括以下县:");
 
         Retrofit retrofit = new Retrofit.Builder()
 //                        .baseUrl("http://gank.io/")//这里不要用localhost 我们用ip地址来
@@ -66,7 +67,7 @@ public class DistractActivity extends AppCompatActivity {
                     list.add(row.getName());
                 }
 
-                adapter=new RecycleDemoAdapter(DistractActivity.this,list,2);
+                adapter=new RecycleDemoAdapter(DistractActivity.this,list,2,city);
 
                 LinearLayoutManager layoutManager=new LinearLayoutManager(DistractActivity.this);
 

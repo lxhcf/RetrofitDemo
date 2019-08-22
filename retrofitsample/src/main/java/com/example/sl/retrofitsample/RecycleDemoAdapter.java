@@ -23,6 +23,7 @@ public class RecycleDemoAdapter extends RecyclerView.Adapter<RecycleDemoAdapter.
     List<String> list;
     int rank;
     List<String> adcodeList;
+    String city;
 
     public RecycleDemoAdapter(Context context, List<String> list) {
         this.context = context;
@@ -32,6 +33,13 @@ public class RecycleDemoAdapter extends RecyclerView.Adapter<RecycleDemoAdapter.
         this.context = context;
         this.list=list;
         this.rank=rank;
+    }
+    public RecycleDemoAdapter(Context context, List<String> list,int rank,String city) {
+        this.context = context;
+        this.list=list;
+        this.rank=rank;
+        this.city=city;
+
     }
     public RecycleDemoAdapter(Context context, List<String> list,int rank, List<String> adcodeList) {
         this.context = context;
@@ -116,7 +124,7 @@ public class RecycleDemoAdapter extends RecyclerView.Adapter<RecycleDemoAdapter.
                 }
                 else {
                     intent=new Intent(context,WeatherActivity.class);
-                    intent.putExtra("distract",s);
+                    intent.putExtra("distract",city);
                     context.startActivity(intent);
 
                 }
