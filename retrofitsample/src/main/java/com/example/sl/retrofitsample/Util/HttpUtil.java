@@ -1,4 +1,4 @@
-package com.example.sl.retrofitsample;
+package com.example.sl.retrofitsample.Util;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;

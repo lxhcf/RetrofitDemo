@@ -1,7 +1,6 @@
 package com.example.sl.retrofitsample;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,19 +9,13 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.sl.retrofitsample.Gson.CityBean;
-import com.example.sl.retrofitsample.Gson.Forecast;
-import com.example.sl.retrofitsample.Gson.Weather;
 import com.example.sl.retrofitsample.Gson.WeatherBean;
-import com.example.sl.retrofitsample.Impl.DistractApi;
 import com.example.sl.retrofitsample.Impl.WeatherApi;
+import com.example.sl.retrofitsample.Util.HttpUtil;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -65,14 +58,12 @@ public class WeatherActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String distract = intent.getStringExtra("distract");
         titleCity.setText(distract);
-//        test.setText(distract);
 
         /**
          * 请求天气信息
          */
         Retrofit retrofit = new Retrofit.Builder()
-//                        .baseUrl("http://gank.io/")//这里不要用localhost 我们用ip地址来
-                .baseUrl("http://datavmap-public.oss-cn-hangzhou.aliyuncs.com/")//这里不要用localhost 我们用ip地址来
+                .baseUrl("http://datavmap-public.oss-cn-hangzhou.aliyuncs.com/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         //创建网络请求接口的实例
@@ -82,13 +73,8 @@ public class WeatherActivity extends AppCompatActivity {
         call.enqueue(new Callback<WeatherBean>() {//这里回调有子线程 所以可以进行UI操作
             @Override
             public void onResponse(Call<WeatherBean> call, Response<WeatherBean> response) {
-                //我们对返回的GankBean实体类以及response响应数据进行回调函数编写操作
-//                        GankBean.ResultsBean bean = response.body().getResults().get(0);
-                String pm25 = response.body().getPm25();
-                String temp = response.body().getTemp();
-                String weather = response.body().getWeather();
                 /**
-                 * 设置容器值
+                 * 标题数据
                  */
                 titleUpdateTime.setText(response.body().getWind());
                 degreeText.setText(response.body().getTemp());
@@ -146,6 +132,9 @@ public class WeatherActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * 用来从指定网站爬取图片作为天气界面的背景图
+     */
     private void loadBingPic() {
         String requestBingPic = "http://guolin.tech/api/bing_pic";
         HttpUtil.sendOkHttpRequest(requestBingPic, new okhttp3.Callback() {

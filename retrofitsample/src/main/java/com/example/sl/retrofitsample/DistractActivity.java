@@ -48,14 +48,10 @@ public class DistractActivity extends AppCompatActivity {
         distract.setText(city +"包括以下县:");
 
         Retrofit retrofit = new Retrofit.Builder()
-//                        .baseUrl("http://gank.io/")//这里不要用localhost 我们用ip地址来
                 .baseUrl("http://datavmap-public.oss-cn-hangzhou.aliyuncs.com/")//这里不要用localhost 我们用ip地址来
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-        //创建网络请求接口的实例
         DistractApi api = retrofit.create(DistractApi.class);
-//        adcode="340000";
-        //对发送的请求进行封装 以及对实体类进行指定
         Call<CityBean> call = api.getAndroidInfo("http://datavmap-public.oss-cn-hangzhou.aliyuncs.com/areas/csv/"+adcode+"_district.json");
         call.enqueue(new Callback<CityBean>() {//这里回调有子线程 所以可以进行UI操作
             @Override
@@ -70,8 +66,6 @@ public class DistractActivity extends AppCompatActivity {
                 adapter=new RecycleDemoAdapter(DistractActivity.this,list,2,city);
 
                 LinearLayoutManager layoutManager=new LinearLayoutManager(DistractActivity.this);
-
-//                        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
                 recycleView.setLayoutManager(layoutManager);
                 recycleView.setAdapter(adapter);
             }

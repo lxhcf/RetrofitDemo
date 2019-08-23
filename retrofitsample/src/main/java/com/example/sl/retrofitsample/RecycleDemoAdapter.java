@@ -53,7 +53,7 @@ public class RecycleDemoAdapter extends RecyclerView.Adapter<RecycleDemoAdapter.
     }
 
     /**
-     * 创建viewHolder 用来初始化控件,
+     * 创建viewHolder 用来初始化控件
      */
     class MyHolder extends RecyclerView.ViewHolder{
 
@@ -68,9 +68,9 @@ public class RecycleDemoAdapter extends RecyclerView.Adapter<RecycleDemoAdapter.
     }
 
     /**
-     * 创建viewHolder ,
+     * 创建viewHolder
      * 注册item
-     * 即listview绑定到那个布局文件
+     * 即RecycleView绑定到布局文件
      * @param parent
      * @param viewType
      * @return
@@ -79,13 +79,6 @@ public class RecycleDemoAdapter extends RecyclerView.Adapter<RecycleDemoAdapter.
     @Override
     public MyHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.recycleview_demo_item,parent,false);
-        /**
-         * 加下划线
-         */
-        RecyclerView.LayoutParams layoutParams=(RecyclerView.LayoutParams)view.getLayoutParams();
-        layoutParams.topMargin=1;
-        view.setLayoutParams(layoutParams);
-
         MyHolder myHolder=new MyHolder(view);
         return myHolder;
 
@@ -116,11 +109,16 @@ public class RecycleDemoAdapter extends RecyclerView.Adapter<RecycleDemoAdapter.
                     context.startActivity(intent);
                 }
                 else if(rank==1) {
+                    /**
+                     * 注释原因:这里注释掉的部分原来是打算由市跳转县的,
+                     *          不过由于网络接口没有提供大部分县的天气数据,
+                     *          故不提供县的天气数据,直接跳转天气页面
+                     * 优化方案:更换网络接口去获取县的天气数据
+                     */
 //                    intent=new Intent(context,DistractActivity.class);
 //                    intent.putExtra("city",s);
 //                    intent.putExtra("adcode",adcodeList.get(position));
 //                    context.startActivity(intent);
-
                     intent=new Intent(context,WeatherActivity.class);
                     intent.putExtra("distract",s);
                     context.startActivity(intent);
@@ -143,15 +141,12 @@ public class RecycleDemoAdapter extends RecyclerView.Adapter<RecycleDemoAdapter.
         });
     }
 
-
     /**
      * 返回item个数
      * @return
      */
     @Override
     public int getItemCount() {
-//        return Integer.parseInt(null);
         return list.size();
-
     }
 }
