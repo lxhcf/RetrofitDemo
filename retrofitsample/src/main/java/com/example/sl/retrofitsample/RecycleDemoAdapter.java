@@ -116,9 +116,13 @@ public class RecycleDemoAdapter extends RecyclerView.Adapter<RecycleDemoAdapter.
                     context.startActivity(intent);
                 }
                 else if(rank==1) {
-                    intent=new Intent(context,DistractActivity.class);
-                    intent.putExtra("city",s);
-                    intent.putExtra("adcode",adcodeList.get(position));
+//                    intent=new Intent(context,DistractActivity.class);
+//                    intent.putExtra("city",s);
+//                    intent.putExtra("adcode",adcodeList.get(position));
+//                    context.startActivity(intent);
+
+                    intent=new Intent(context,WeatherActivity.class);
+                    intent.putExtra("distract",s);
                     context.startActivity(intent);
 
                 }
