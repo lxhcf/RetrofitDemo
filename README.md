@@ -1,6 +1,8 @@
 # retrofitsample
 用Retrofit请求网络的天气接口
-
+# 效果预览
+ ![image](https://github.com/lxhcf/RetrofitDemo/blob/master/Screenshot_2019-08-23-09-44-13-33.png)
+ ![image](https://github.com/lxhcf/RetrofitDemo/blob/master/Screenshot_2019-08-23-09-44-25-64.png)
 
 #存在问题:
 部分县级区域的天气信息无法获取,故暂时用市的天气代替.
